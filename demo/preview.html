@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AntV F2 Charts Preview</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@antv/f2@5.7.5/dist/f2.min.js"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+    .chart-container {
+      margin-bottom: 30px;
+      padding: 20px;
+      border: 1px solid #eee;
+      border-radius: 4px;
+    }
+    h2 {
+      margin-top: 0;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AntV F2 Charts Preview</h1>
+    
+    <div class="chart-container">
+      <h2>Bar Chart</h2>
+      <canvas id="bar-chart" width="350" height="250"></canvas>
+    </div>
+    
+    <div class="chart-container">
+      <h2>Line Chart</h2>
+      <canvas id="line-chart" width="350" height="250"></canvas>
+    </div>
+    
+    <div class="chart-container">
+      <h2>Pie Chart</h2>
+      <canvas id="pie-chart" width="350" height="250"></canvas>
+    </div>
+    
+    <div class="chart-container">
+      <h2>Area Chart</h2>
+      <canvas id="area-chart" width="350" height="250"></canvas>
+    </div>
+    
+    <div class="chart-container">
+      <h2>Radar Chart</h2>
+      <canvas id="radar-chart" width="350" height="250"></canvas>
+    </div>
+    
+    <div class="chart-container">
+      <h2>Scatter Chart</h2>
+      <canvas id="scatter-chart" width="350" height="250"></canvas>
+    </div>
+  </div>
+
+  <script>
+    // 示例数据
+    const barData = [
+      { genre: 'Sports', sold: 275 },
+      { genre: 'Strategy', sold: 115 },
+      { genre: 'Action', sold: 120 },
+      { genre: 'Shooter', sold: 350 },
+      { genre: 'Other', sold: 150 },
+    ];
+
+    const lineData = [
+      { date: '2023-01', value: 10 },
+      { date: '2023-02', value: 25 },
+      { date: '2023-03', value: 15 },
+      { date: '2023-04', value: 30 },
+      { date: '2023-05', value: 18 },
+      { date: '2023-06', value: 35 },
+    ];
+
+    const pieData = [
+      { name: 'A类', percent: 0.4, a: '1' },
+      { name: 'B类', percent: 0.2, a: '1' },
+      { name: 'C类', percent: 0.18, a: '1' },
+      { name: 'D类', percent: 0.15, a: '1' },
+      { name: 'E类', percent: 0.07, a: '1' },
+    ];
+
+    const areaData = [
+      { date: '2023-01', value: 10 },
+      { date: '2023-02', value: 25 },
+      { date: '2023-03', value: 15 },
+      { date: '2023-04', value: 30 },
+      { date: '2023-05', value: 18 },
+      { date: '2023-06', value: 35 },
+    ];
+
+    const radarData = [
+      { item: '设计', user: '用户A', score: 70 },
+      { item: '开发', user: '用户A', score: 60 },
+      { item: '运营', user: '用户A', score: 50 },
+      { item: '测试', user: '用户A', score: 80 },
+      { item: '产品', user: '用户A', score: 85 },
+      { item: '设计', user: '用户B', score: 85 },
+      { item: '开发', user: '用户B', score: 75 },
+      { item: '运营', user: '用户B', score: 65 },
+      { item: '测试', user: '用户B', score: 60 },
+      { item: '产品', user: '用户B', score: 70 },
+    ];
+
+    const scatterData = [
+      { x: 10, y: 8, size: 20, category: 'A' },
+      { x: 15, y: 13, size: 15, category: 'A' },
+      { x: 8, y: 15, size: 10, category: 'A' },
+      { x: 18, y: 12, size: 25, category: 'B' },
+      { x: 12, y: 10, size: 18, category: 'B' },
+      { x: 5, y: 5, size: 12, category: 'C' },
+      { x: 22, y: 18, size: 8, category: 'C' },
+    ];
+
+    // 渲染图表
+    document.addEventListener('DOMContentLoaded', () => {
+      // 条形图
+      const barChart = new F2.Chart({
+        id: 'bar-chart',
+        pixelRatio: window.devicePixelRatio
+      });
+      
+      barChart.source(barData);
+      barChart.interval().position('genre*sold').color('genre');
+      barChart.render();
+
+      // 折线图
+      const lineChart = new F2.Chart({
+        id: 'line-chart',
+        pixelRatio: window.devicePixelRatio
+      });
+      
+      lineChart.source(lineData);
+      lineChart.line().position('date*value');
+      lineChart.point().position('date*value').style({
+        stroke: '#fff',
+        lineWidth: 1
+      });
+      lineChart.render();
+
+      // 饼图
+      const pieChart = new F2.Chart({
+        id: 'pie-chart',
+        pixelRatio: window.devicePixelRatio
+      });
+      
+      pieChart.source(pieData);
+      pieChart.coord('polar', {
+        transposed: true,
+        innerRadius: 0.6
+      });
+      pieChart.interval()
+        .position('a*percent')
+        .color('name')
+        .adjust('stack');
+      pieChart.render();
+
+      // 面积图
+      const areaChart = new F2.Chart({
+        id: 'area-chart',
+        pixelRatio: window.devicePixelRatio
+      });
+      
+      areaChart.source(areaData);
+      areaChart.area().position('date*value');
+      areaChart.line().position('date*value');
+      areaChart.render();
+
+      // 雷达图
+      const radarChart = new F2.Chart({
+        id: 'radar-chart',
+        pixelRatio: window.devicePixelRatio
+      });
+      
+      radarChart.source(radarData);
+      radarChart.coord('polar');
+      radarChart.axis('item', {
+        grid: {
+          lineDash: null
+        }
+      });
+      radarChart.line().position('item*score').color('user');
+      radarChart.point().position('item*score').color('user').style({
+        stroke: '#fff',
+        lineWidth: 1
+      });
+      radarChart.render();
+
+      // 散点图
+      const scatterChart = new F2.Chart({
+        id: 'scatter-chart',
+        pixelRatio: window.devicePixelRatio
+      });
+      
+      scatterChart.source(scatterData);
+      scatterChart.point().position('x*y').size('size').color('category');
+      scatterChart.render();
+    });
+  </script>
+</body>
+</html>

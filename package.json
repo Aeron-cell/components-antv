@@ -1,0 +1,38 @@
+{
+  "name": "antv-components",
+  "version": "1.0.0",
+  "description": "A React component library based on AntV F2 charts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "antv",
+    "f2",
+    "chart",
+    "charts",
+    "visualization",
+    "react",
+    "component"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@antv/f2": "^5.7.5",
+    "@antv/f2-react": "^5.7.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  }
+}
